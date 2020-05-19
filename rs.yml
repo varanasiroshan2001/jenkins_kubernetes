@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+   name: myrs-ros
+spec:
+   replicas: 4
+   selector:
+     matchExpressions:
+       - { key: env, operator: In, values: [ testing ] }
+       - { key: country, operator: In, values: [ germany ] }
+   template:
+      metadata:
+         name: myweb-pod
+         labels:
+            env: testing
+            country: germany
+            datacentre: "11"
+      spec:
+         containers:
+         - name: myweb
+           image: httpd
